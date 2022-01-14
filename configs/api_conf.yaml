@@ -1,0 +1,530 @@
+# 接口数据模板，对应接口的className要相同
+
+# 基类，不需要使用
+BaseAPI:
+  add: {}
+  edit: {}
+  delete: {}
+  list: {}
+
+#commonAPI类，共用类
+CommonAPI:
+  # 获取用户角色
+  getRolesByUser: {}
+  # 根据用户名获取详细的用户信息
+  getDetailByAccountOrId: {}
+  #  获取当前用户的前端菜单
+  getCurrentUserMenu: {
+    "menuAlias": "front_menu"
+  }
+  # 获取当前用户方法身份验证
+  getCurrentUserMethodAuth: {}
+  # 获取字典选项（多层级展示）
+  getFormatDics: {
+    "nodeKey": "visit_type"
+  }
+  # 查询用户：按用户名查询
+  querySubUser: {
+    "querys":[
+      {"group":"main","operation":"LIKE","property":"FULLNAME_","relation":"OR","value":""},
+      {"group":"main","operation":"LIKE","property":"EMAIL_","relation":"OR","value":""}
+    ]
+  }
+
+
+# clueAPI 线索管理类
+ClueAPI:
+  # 获取线索
+  get_myself_clue: {
+    "pageBean":{
+      "page":1,
+      "pageSize":50,
+      },
+    "querys":[
+      {"property":"person","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+      {"property":"phone","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+      {"property":"telephone","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+      {"property":"wx","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+      {"property":"qq","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+      {"property":"email","value":"","group":"quick","relation":"OR","operation":"LIKE"}
+      ],
+    "params":{
+      "clueTag":"",       # 线索标签
+      "clueState":"",     # 线索状态
+      "followOrg":"",     # 所在组织
+      "followBy":"",      # 跟进人
+      "clueType":"",      # 线索类型
+      "followCompany": "", # 所在分公司
+      "province":"",      # 省
+      "city":"",          # 市
+      "areas":""          # 区
+      }
+  }
+
+  # 保存线索，保存创建和修改更新
+  save_clue: {
+      "person": "",
+      "phone": "",
+      "telephone": "",
+      "wx": "",
+      "qq": "",
+      "email": "",
+      "source": "tyc",     # 线索来源字段，创建我的线索填写
+      "sourceChannel": "",    # 推广渠道，创建推广线索填写 tg_bdss
+      "intentionLevel": "C",    # +意向等级:A B C
+      "obtainTime": "",    # 获取线索时间，创建推广线索填写
+      "sourceAccount": "",        # 推广线索来源户，创建推广线索填写 00
+      "demandType": "03",       # +需求分类:00资质办理,01资质维护,02人才需求,03其他需求
+      "demandRemark": "这是需求分类备注",          # +需求备注
+      "remark": "这是备注",
+      "consultQua": "咨询资质",
+      "clueType": "00",        # 线索类型：00我的线索，01推广线索
+      "province": "110000",    # 省
+      "city": "110100",        # 市
+      "areas": "110101",        # 区
+      "clueNo":"",             # 线索编号 ，编辑修改线索是传递
+      "clueTag":""          # 线索标签 10,101,102,103,20,201,202
+  }
+
+  #  转移线索
+  transfer_clue: {
+    clueNos: "XS2472631",     # 线索id,多个id时："XS2472631,XS2472632"
+    transferTo: "1407876697361092608"   # 线索接受者id,如：1407876697361092608
+  }
+
+  #  移入公海线索
+  move_to_noMaster: {
+    clueNos: "XS2471253"  # 线索id,多个id时："XS2472631,XS2472632"
+  }
+
+  #  移入无效线索
+  move_to_invalid: {
+    clueNos: "XS2471241",       # 线索id,多个id时："XS2472631,XS2472632"
+    remark: "无效的联系方式"      # 备注信息
+  }
+
+  # 导出我的线索
+  exportClues: {
+    "params":{
+      "isSensitive":true,    # isSensitive: ture 脱敏导出; false 正常导出
+      "clueNos":"XS2471395,XS2471247"     # clueNos：没有这个参数字段为全部导出，有参数并且有值就是导出指定值的
+    }
+  }
+
+  # 获取我的线索详情基本信息
+  getClueByAuth: {
+    "clueNo": "XS2471395",    # XS2471395
+    "type": "myself"          # 线索类型，myself：我的线索； extension：推广线索
+  }
+
+  # (线索)跟进记录
+  get_followup_record: {
+    "params":{
+      "fkId":"1464132832069816320",
+      "type":1
+    },
+    "pageBean":{
+      "page":1,
+      "pageSize":10
+    }
+  }
+
+  # (线索)操作记录
+  get_operation_record: {
+    "pageBean":{
+      "page":1,
+      "pageSize":50
+    }
+  }
+
+  # （线索）写跟进
+  create_FollowUp: {
+    "type":"1",
+    "nextFollowTime":"2021-11-27 00:00:00",
+    "remark":"这是跟进内容",
+    "nextRemark":"这是下次跟进备注",
+    "clueTag":["20"],      # 没数据时用 []
+    "isMeet":true,
+    "taskType":1,
+    "fkId":"1464132832069816320",
+    "taskTitle":"线索跟进"
+  }
+
+  # 加入我的线索
+  move_to_myself: {
+    clueNos: "1465211900404043776,1431440053799882752"  # 线索编号
+  }
+
+  # 公海线索列表
+  get_noMaster: {
+    "pageBean":{
+      "page":1,
+      "pageSize":50,
+    },
+    "querys":[
+      {"property":"person","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+      {"property":"phone","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+      {"property":"telephone","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+      {"property":"wx","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+      {"property":"qq","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+      {"property":"email","value":"","group":"quick","relation":"OR","operation":"LIKE"}
+      ],
+    "params":{
+      "clueType":"",
+      "clueTag":"",
+      "province":"",
+      "city":"",
+      "areas":""
+    }
+  }
+
+  # 无效线索列表
+  get_invalid: {
+    "pageBean":{
+      "page":1,
+      "pageSize":50,
+    },
+    "querys":[
+    {"property":"person","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+    {"property":"phone","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+    {"property":"telephone","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+    {"property":"wx","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+    {"property":"qq","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+    {"property":"email","value":"","group":"quick","relation":"OR","operation":"LIKE"}
+    ],
+    "params":{
+      "clueType":"",
+      "clueTag":"",
+      "province":"",
+      "city":"",
+      "areas":""
+    }
+  }
+
+  # 推广线索列表
+  get_extension: {
+    "pageBean":{
+      "page":1,
+      "pageSize":50,
+    },
+    "querys":[
+      {"property":"person","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+      {"property":"phone","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+      {"property":"telephone","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+      {"property":"wx","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+      {"property":"qq","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+      {"property":"email","value":"","group":"quick","relation":"OR","operation":"LIKE"}
+      ],
+    "params":{
+      "clueTag":"",       # 线索标签
+      "clueState":"",     # 线索状态
+      "followOrg":"",     # 所在组织
+      "followBy":"",      # 跟进人
+      "clueType":"",      # 线索类型
+      "followCompany": "", # 所在分公司
+      "province":"",      # 省
+      "city":"",          # 市
+      "areas":""          # 区
+    }
+  }
+
+  # 推广线索分配到分公司
+  allot_clue: {
+    "clueNos": "1465558352619769856",       # 线索编号
+    "allotTo": "286"          # 分公司id
+  }
+
+  # 推广线索分配到人
+  allot_clue_to_user: {
+    "clueNos": "1465558352619769856",   # 线索编号
+    "allotTo": "1407876697361092608"    # 用户id
+  }
+
+  # 线索审核列表
+  clue_review: {
+    "pageBean":{
+        "page":1,
+        "pageSize":50
+      },
+    "querys":[
+        {"property":"person","value":"","group":"quick","relation":"OR","operation":"LIKE"}
+      ],
+    "params":{
+        "followBy":"",                        # 跟进人id
+        "intentionLevel":"",                 # 意向等级
+        "demandType":"",                    # 需求分类 00 01 02 03
+        "examineStatus":""                  # 审批状态 00 01 02
+      }
+  }
+
+  #  线索审核为有效或无效
+  examine_clue: {
+      "id": "31959ebf15d74fb8a5c9c86904cef08d",       # 线索id
+      "status": "01"            # 线索状态：01 有效；02 无效
+  }
+
+# CustomerAPI 我的客户管理API类
+CustomerAPI:
+
+  # 我的客户列表
+  customer_list: {
+    "pageBean":{
+      "page": 1,
+      "pageSize": 50
+    },
+    "querys":[
+    {"property":"person","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+    {"property":"phone","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+    {"property":"telephone","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+    {"property":"wx","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+    {"property":"qq","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+    {"property":"email","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+    {"property":"name","value":"","group":"quick","relation":"OR","operation":"LIKE"}
+    ],
+    "params":{
+      "province": "",         # 省
+      "city": "",             # 市
+      "areas": "",            # 区
+      "followCompany": "",         # 客户归属公司 1442323703668019200
+      "followOrg":"",               # 跟进人所属组织 1442323703668019200
+      "followUp": "",               # 跟进人id: 1407876689714876416
+      "dealState":"",               # 成交状态: 00 未成交,02 已成交
+      "intentionToGrade":"",        # 意向等级 A,B,C,D
+      "custType":"",                # 客户类型: 01 个人客户; 02 企业客户
+      "handover":{ "id":"","value":""}
+    },
+    sorter: [
+      {
+        property: "lastFollowTime",             # 排序字段
+        direction: "DESC"               # 降序 DESC, 升序ASC
+      }
+    ]
+  }
+
+  #  客户移入公海
+  customer_moveTo_noMaster: {
+    "custNos":"KH202109700009"        # 客户id，多个时："KH202109700009,KH202109700008"
+  }
+
+  #  转移客户
+  transfer_customer: {
+    "custNos": "KH2021121800015",         # 客户编号
+    "handover": "1407876697361092608",    # 接收主体id
+    "transferTo": "",
+    "remark": "这是转移客户的备注",          # 备注信息
+    "isOnly": "0"                         # 只转移客户:1 是; 0 否
+  }
+
+  #  创建客户
+  create_cystomer: {
+    "person":"客户联系人",              # 联系人 （非共工商信息）
+    "custType":"02",                  # 客户类型：01 个人客户，02企业客户  （非共工商信息）
+    "followCompany":"1442323703668019200",      # 客户归属公司    （非共工商信息）
+    "phone":"15052458290",            # 手机号            （非共工商信息）
+    "intentionToGrade":"A",           # 意向等级 A,B,C    （非共工商信息）
+    "clueNo":"",   # 线索编号 （非共工商信息）
+    "qq":"",                # qq号 （非共工商信息）
+    "wx":"",             # 微信号 （非共工商信息）
+    "email":"",      # 邮箱 （非共工商信息）
+    "province":"110000",              # 省 （非共工商信息）
+    "city":"110100",                  # 市 （非共工商信息）
+    "areas":"110101",                 # 区 （非共工商信息）
+    "address":"客户详细地址",           # 客户详细地址 （非共工商信息）
+    "source":"tyc",                 # 客户来源（非共工商信息）
+    "sourceChannel":"",             # 推广渠道，推广线索转换为客户才需要填写（非共工商信息）
+    "telephone":"",         # 固话（非共工商信息）
+    "remark":"测试备注",                 # 备注（非共工商信息）
+    "clueType":"00",                # 线索分类：00 普通线索，01 推广线索（非共工商信息）
+
+    "nameCn":"广东宏玖建设工程有限公司",        # 企业名称 （工商信息）
+    "socialCreditCode":"91441900564529778W",    # 信用代码 （工商信息）
+    "legalPerson":"蔡宣",                   # 法人（工商信息）
+    "registAddress":"东莞市寮步镇石大路坑口段37号一楼", # 注册地址（工商信息）
+    "registeredCapital":"7034.5万人民币",      # 注册资本（工商信息）
+    "licenseStartDate":"2018-01-29",        # 营业期限开始时间（工商信息）
+    "licenseEndDate":"9999-01-01 00:00:00",       # 营业期限结束时间（工商信息）
+    "foundDate":"2010-11-10",                   # 成立日期（工商信息）
+    "issueDate":"2015-12-01",                   # 核准日期（工商信息）
+    "businessScope":"营业范围",                      # 营业范围（工商信息）
+    "transformerName":"东莞市宏玖建设工程有限公司",     # 曾用名（工商信息）
+    "enterType":"04",         # 企业类型：04 有限责任公司；05 股份有限公司
+
+    "linkNumber":"",
+    "linkType":"",
+    "type":"",
+    "idNo":""
+  }
+
+  #  写（客户）跟进
+  write_customer_follow_up: {
+    "taskType": 2,
+    "type": "2",
+    "remark": "测试跟进内容",
+    "nextFollowTime": "2022-01-21 00:00:00",
+    "nextRemark": "跟进备注",
+    "intentionToGrade": "A",
+    "filesList": [],
+    "files": "",
+    "fkId": "KH2022011200002",
+    "taskTitle": "客户跟进"      # 这个固定不变
+  }
+
+  #  编辑客户基础信息
+  edit_customer: {
+    "person":"客户联系人",              # 联系人 （非共工商信息）
+    "custType":"02",                  # 客户类型：01 个人客户，02企业客户  （非共工商信息）
+    "followCompany":"1442323703668019200",      # 客户归属公司    （非共工商信息）
+    "phone":"15052458290",            # 手机号            （非共工商信息）
+    "intentionToGrade":"A",           # 意向等级 A,B,C    （非共工商信息）
+    "clueNo":"",   # 线索编号 （非共工商信息）
+    "qq":"",                # qq号 （非共工商信息）
+    "wx":"",             # 微信号 （非共工商信息）
+    "email":"",      # 邮箱 （非共工商信息）
+    "province":"110000",              # 省 （非共工商信息）
+    "city":"110100",                  # 市 （非共工商信息）
+    "areas":"110101",                 # 区 （非共工商信息）
+    "address":"客户详细地址",           # 客户详细地址 （非共工商信息）
+#    "source":"tyc",                 # 客户来源（非共工商信息）   不改客户来源，故不传该参数
+    "sourceChannel":"",             # 推广渠道，推广线索转换为客户才需要填写（非共工商信息）
+    "telephone":"",         # 固话（非共工商信息）
+    "remark":"测试备注",                 # 备注（非共工商信息）
+    "clueType":"",                # 线索分类：00 普通线索，01 推广线索（非共工商信息）
+
+    "nameCn":"广东宏玖建设工程有限公司",        # 企业名称 （工商信息）
+    "socialCreditCode":"91441900564529778W",    # 信用代码 （工商信息）
+    "legalPerson":"蔡宣",                   # 法人（工商信息）
+    "registAddress":"东莞市寮步镇石大路坑口段37号一楼", # 注册地址（工商信息）
+    "registeredCapital":"7034.5万人民币",      # 注册资本（工商信息）
+    "licenseStartDate":"2018-01-29",        # 营业期限开始时间（工商信息）
+    "licenseEndDate":"9999-01-01 00:00:00",       # 营业期限结束时间（工商信息）
+    "foundDate":"2010-11-10",                   # 成立日期（工商信息）
+    "issueDate":"2015-12-01",                   # 核准日期（工商信息）
+    "businessScope":"营业范围",                      # 营业范围（工商信息）
+    "transformerName":"东莞市宏玖建设工程有限公司",     # 曾用名（工商信息）
+    "enterType":"04",         # 企业类型：04 有限责任公司；05 股份有限公司
+
+    "linkNumber":"",
+    "linkType":"",
+    "type":"",
+    "idNo":""
+  }
+
+  #  导出我的客户
+  export_customers: {
+    "params": {
+      "isSensitive": false,         # 是否脱敏导出，False 不脱敏，True脱敏
+      "custNos": "KH2022011000011"   # 客户编号，多个则用逗号分隔。无，则导出全部
+    }
+  }
+
+  # (客户)进记录
+  get_customer_followup_record: {
+    "params":{
+      "fkId":"1464132832069816320",
+      "type":2
+    },
+    "pageBean":{
+      "page":1,
+      "pageSize":10
+    }
+  }
+
+  # 获取企业资料/客户资料
+  get_enterprise_info: {
+    "businessId": "KH2022011200002",   # 客户编号
+    "businessCategory": "02"           # 01 客户资料；02企业资料
+  }
+
+  # 获取商机管理
+  get_opportunity_manager: {
+    "params": {
+      "customerNo": "KH2022011200002"      # 客户编号
+    },
+    "pageBean": {
+      "page": 1,
+      "pageSize": 10
+    }
+  }
+
+  #  获取订单
+  get_orders: {
+    "params": {
+      "customerNo": "KH2022011200002"   # 客户编号
+    },
+    "pageBean": {
+      "page": 1,
+      "pageSize": 10
+    }
+  }
+
+  #  待办任务
+  to_do_tasks: {
+    "params": {
+      "objectId": "KH2022011200002",      # 客户编号
+      "status": "",                       # 01已完成；00未完成；""空为全部
+      "subStatus": "",                    # 02已逾期；03未逾期
+      "beginDate": "",     # 开始时间 2020-12-29 00:00:00
+      "endDate": ""        # 结束时间 2021-03-06 23:59:59
+    },
+    "pageBean": {
+      "page": 1,
+      "pageSize": 10
+    }
+  }
+
+  #  添加联系人
+  add_contacts: [
+    {
+      "isMajor": false,         # 主联系人，True 是，False 否
+      "phones": [],               # 手机,
+      "person": "",         # 联系人姓名
+      "position": "",     # 职位
+      "telephone": "",    # 固话
+      "wx": "",          # 微信
+      "qq": "",             # qq
+      "email": "",   # 邮箱
+      "id": "",
+      "contactNum": ""
+    }
+  ]
+
+  #  创建（客户跟进）任务
+  create_task: {
+    "taskType": "00",      # 任务类型：00 客户跟进
+    "followType": "",
+    "executorType": "01",
+    "licenseTime": "",
+    "objectName": "",         # 跟进客户名称
+    "content": "",
+    "tkTimeType": "1",            # 跟进类型：1 2 3 4 5 6 7 8
+    "userCacheList": "01",      # 任务执行人：00 自己；01 跟进业务
+    "ids": [
+      "KH2022011300014"
+    ],
+    "beginDate": "2022-01-15",
+    "endDate": "2022-01-22"
+  }
+
+  # 公海客户
+  customer_noMaster_list: {
+    "pageBean": {
+      "page": 1,
+      "pageSize": 50
+    },
+    "querys": [
+    {"property":"person","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+    {"property":"phone","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+    {"property":"telephone","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+    {"property":"wx","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+    {"property":"qq","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+    {"property":"email","value":"","group":"quick","relation":"OR","operation":"LIKE"},
+    {"property":"name","value":"","group":"quick","relation":"OR","operation":"LIKE"}
+    ],
+    "params": {
+      "followOrg": "",
+      "followCompany": "",    # 客户归属公司
+      "province": "",      # 省
+      "city": "",          # 市
+      "areas": ""           # 区
+    }
+  }
